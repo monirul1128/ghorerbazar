@@ -2,6 +2,8 @@
 
 A full-featured e-commerce platform built with React, Vite, Tailwind CSS, and Supabase.
 
+> 🚀 Live Demo: [View Site](https://ghorerbazar.vercel.app)
+
 ## 🚀 Features
 
 - **Customer Features:**
