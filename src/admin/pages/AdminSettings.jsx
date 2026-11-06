@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { fetchSettings, saveSettings } from '../../lib/settings';
+import ImageUpload from '../../components/ui/ImageUpload';
 
 const DEFAULTS = {
+  site_logo: '',
   announcement: 'Free delivery on orders above 1000 BDT | 100% Authentic Products',
   announcement_on: 'true',
   threshold: '1000',
@@ -92,6 +94,20 @@ export default function AdminSettings() {
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-gray-900">Settings</h1>
       {error && <p className="text-sm text-red-500">{error}</p>}
+
+      <Section title="Site Branding">
+        <ImageUpload
+          value={settings.site_logo}
+          onChange={url => set('site_logo', url)}
+          folder="branding"
+          label="Site Logo"
+          required={false}
+        />
+        <p className="text-xs text-gray-400 mt-2">
+          Logo will appear in header and footer. Recommended size: 200x60px (transparent PNG)
+        </p>
+        <SaveBtn section="logo" keys={['site_logo']} />
+      </Section>
 
       <Section title="Announcement Bar">
         <Field label="Announcement Text" hint="Displayed in the top bar on all pages">

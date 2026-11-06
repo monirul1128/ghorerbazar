@@ -290,18 +290,57 @@ export default function AdminBanners() {
   const [savedIds, setSavedIds]       = useState({});
   const [categories, setCategories]   = useState([]);
   const [brands, setBrands]           = useState([]);
+  const [loading, setLoading]         = useState(true);
 
   useEffect(() => {
     fetchCategories().then(setCategories).catch(() => {});
     fetchBrands().then(setBrands).catch(() => {});
+    
+    // Load saved banners from database
+    fetchSettings().then(data => {
+      const slides = [];
+      for (let i = 1; i <= 3; i++) {
+        const url = data[`hero_slide_${i}_url`];
+        const link = data[`hero_slide_${i}_link`] || '/shop';
+        const cta = data[`hero_slide_${i}_cta`] || 'Shop Now';
+        
+        slides.push({
+          id: i,
+          label: `Slide ${i}`,
+          url: url || DEFAULT_HERO[i - 1]?.url || '',
+          link: link,
+          cta: cta,
+        });
+      }
+      setHeroSlides(slides);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
-  const markSaved = (id) => {
-    setSavedIds(prev => ({ ...prev, [id]: true }));
-    setTimeout(() => setSavedIds(prev => ({ ...prev, [id]: false })), 2000);
+  const handleSave = async (banner) => {
+    try {
+      await saveSettings([
+        { key: `hero_slide_${banner.id}_url`, value: banner.url },
+        { key: `hero_slide_${banner.id}_link`, value: banner.link },
+        { key: `hero_slide_${banner.id}_cta`, value: banner.cta },
+      ]);
+      setSavedIds(prev => ({ ...prev, [banner.id]: true }));
+      setTimeout(() => setSavedIds(prev => ({ ...prev, [banner.id]: false })), 2000);
+    } catch (error) {
+      console.error('Save failed:', error);
+      alert('Failed to save banner. Please try again.');
+    }
   };
 
   const updateHero  = (u) => setHeroSlides(prev => prev.map(s => s.id === u.id ? u : s));
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-12">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-orange border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -312,7 +351,7 @@ export default function AdminBanners() {
         <p className="text-xs text-gray-500">Full width slider images for homepage</p>
         <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {heroSlides.map(s => (
-            <BannerCard key={s.id} banner={s} onChange={updateHero} onSave={markSaved}
+            <BannerCard key={s.id} banner={s} onChange={updateHero} onSave={() => handleSave(s)}
               saved={savedIds[s.id]} categories={categories} brands={brands} />
           ))}
         </div>

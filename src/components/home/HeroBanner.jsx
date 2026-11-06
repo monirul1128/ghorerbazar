@@ -1,13 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { fetchSettings } from "../../lib/settings";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-const slides = [
+const defaultSlides = [
   {
     href: "/shop",
     img: "https://backoffice.ghorerbazar.com/banner/o1uH11775363016-light.jpg",
@@ -30,6 +31,33 @@ const slides = [
 
 export default function HeroBanner() {
   const swiperRef = useRef(null);
+  const [slides, setSlides] = useState(defaultSlides);
+
+  useEffect(() => {
+    fetchSettings().then(data => {
+      const loadedSlides = [];
+      for (let i = 1; i <= 3; i++) {
+        const url = data[`hero_slide_${i}_url`];
+        const link = data[`hero_slide_${i}_link`] || '/shop';
+        const cta = data[`hero_slide_${i}_cta`] || 'Shop Now';
+        
+        if (url) {
+          loadedSlides.push({
+            href: link,
+            img: url,
+            alt: cta,
+            eager: i === 1,
+          });
+        }
+      }
+      
+      if (loadedSlides.length > 0) {
+        setSlides(loadedSlides);
+      }
+    }).catch(() => {
+      // Keep default slides if fetch fails
+    });
+  }, []);
 
   return (
     <section className="px-4 sm:px-6 lg:px-8 py-8 sm:py-12 h-[300px] sm:h-[380px] lg:h-[440px] max-w-7xl mx-auto w-full">
