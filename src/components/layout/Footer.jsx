@@ -60,7 +60,7 @@ export default function Footer() {
             <a href="/">
               <img
                 src={site_logo || "/logoname.svg"}
-                alt="GhorerBazar"
+                alt="খাটি বিশ্বাস"
                 className="h-9 w-auto brightness-0 invert"
               />
             </a>
@@ -123,7 +123,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t border-white/10 pt-6 flex items-center justify-between">
           <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} GhorerBazar. All rights reserved.
+            &copy; {new Date().getFullYear()} খাটি বিশ্বাস. All rights reserved.
           </p>
           <div className="flex space-x-5">
             {socialLinks.map((item) => (

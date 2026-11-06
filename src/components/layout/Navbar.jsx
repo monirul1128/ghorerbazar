@@ -90,7 +90,7 @@ export default function Navbar() {
             <Link to="/" className="flex shrink-0 items-center">
               <img
                 src={site_logo || "/logoname.svg"}
-                alt="GhorerBazar"
+                alt="খাটি বিশ্বাস"
                 className="h-9 w-auto"
               />
             </Link>
@@ -307,7 +307,7 @@ export default function Navbar() {
                 <Link to="/" onClick={() => setMobileOpen(false)}>
                   <img
                     src={site_logo || "/logoname.svg"}
-                    alt="GhorerBazar"
+                    alt="খাটি বিশ্বাস"
                     className="h-8 w-auto"
                   />
                 </Link>
