@@ -1,3 +1,5 @@
+import { useSettings } from '../../context/SettingsContext';
+
 const helpLinks = [
   { name: 'Contact Us',      href: '#' },
   { name: 'Track Order',     href: '#' },
@@ -45,6 +47,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { site_logo } = useSettings();
   return (
     <footer className="bg-brand-dark" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">Footer</h2>
@@ -56,7 +59,7 @@ export default function Footer() {
           <div className="lg:w-1/2 lg:pr-16">
             <a href="/">
               <img
-                src="/logoname.svg"
+                src={site_logo || "/logoname.svg"}
                 alt="GhorerBazar"
                 className="h-9 w-auto brightness-0 invert"
               />

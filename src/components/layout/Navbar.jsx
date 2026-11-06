@@ -45,7 +45,7 @@ export default function Navbar() {
   const { totalQty, dispatch } = useCart();
   const { user, logout } = useUserAuth();
   const { slugs } = useWishlist();
-  const { announcement, announcement_on } = useSettings();
+  const { announcement, announcement_on, site_logo } = useSettings();
   const isActive = useIsActive();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -89,7 +89,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link to="/" className="flex shrink-0 items-center">
               <img
-                src="/logoname.svg"
+                src={site_logo || "/logoname.svg"}
                 alt="GhorerBazar"
                 className="h-9 w-auto"
               />
@@ -306,7 +306,7 @@ export default function Navbar() {
               <div className="flex items-center justify-between px-4 pb-4 pt-5">
                 <Link to="/" onClick={() => setMobileOpen(false)}>
                   <img
-                    src="/logoname.svg"
+                    src={site_logo || "/logoname.svg"}
                     alt="GhorerBazar"
                     className="h-8 w-auto"
                   />
