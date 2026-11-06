@@ -124,6 +124,16 @@ function BannerCard({ banner, onChange, onSave, saved, categories, brands }) {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const dirty = JSON.stringify(form) !== JSON.stringify(banner);
 
+  // Update local form when banner prop changes (after save)
+  useEffect(() => {
+    setForm({ ...banner });
+  }, [banner]);
+
+  const handleSave = () => {
+    onChange(form);
+    onSave(form); // Pass the updated form data, not just the ID
+  };
+
   return (
     <div className="rounded-2xl bg-white shadow-sm overflow-hidden">
       <div className="flex items-center gap-4 p-4 border-b border-gray-100">
@@ -179,7 +189,7 @@ function BannerCard({ banner, onChange, onSave, saved, categories, brands }) {
 
         <div className="flex justify-end">
           <button disabled={!dirty}
-            onClick={() => { onChange(form); onSave(banner.id); }}
+            onClick={handleSave}
             className="rounded-full bg-brand-orange px-4 py-1.5 text-xs font-semibold text-white hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed">
             Save
           </button>
@@ -317,22 +327,30 @@ export default function AdminBanners() {
     }).catch(() => setLoading(false));
   }, []);
 
-  const handleSave = async (banner) => {
+  const handleSave = async (updatedBanner) => {
     try {
+      // First update the state with the new data
+      setHeroSlides(prev => prev.map(s => s.id === updatedBanner.id ? updatedBanner : s));
+      
+      // Then save to database
       await saveSettings([
-        { key: `hero_slide_${banner.id}_url`, value: banner.url },
-        { key: `hero_slide_${banner.id}_link`, value: banner.link },
-        { key: `hero_slide_${banner.id}_cta`, value: banner.cta },
+        { key: `hero_slide_${updatedBanner.id}_url`, value: updatedBanner.url },
+        { key: `hero_slide_${updatedBanner.id}_link`, value: updatedBanner.link },
+        { key: `hero_slide_${updatedBanner.id}_cta`, value: updatedBanner.cta },
       ]);
-      setSavedIds(prev => ({ ...prev, [banner.id]: true }));
-      setTimeout(() => setSavedIds(prev => ({ ...prev, [banner.id]: false })), 2000);
+      
+      setSavedIds(prev => ({ ...prev, [updatedBanner.id]: true }));
+      setTimeout(() => setSavedIds(prev => ({ ...prev, [updatedBanner.id]: false })), 2000);
     } catch (error) {
       console.error('Save failed:', error);
       alert('Failed to save banner. Please try again.');
     }
   };
 
-  const updateHero  = (u) => setHeroSlides(prev => prev.map(s => s.id === u.id ? u : s));
+  const updateHero = (u) => {
+    // Update state immediately for UI responsiveness
+    setHeroSlides(prev => prev.map(s => s.id === u.id ? u : s));
+  };
 
   if (loading) {
     return (
@@ -351,7 +369,7 @@ export default function AdminBanners() {
         <p className="text-xs text-gray-500">Full width slider images for homepage</p>
         <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {heroSlides.map(s => (
-            <BannerCard key={s.id} banner={s} onChange={updateHero} onSave={() => handleSave(s)}
+            <BannerCard key={s.id} banner={s} onChange={updateHero} onSave={handleSave}
               saved={savedIds[s.id]} categories={categories} brands={brands} />
           ))}
         </div>
