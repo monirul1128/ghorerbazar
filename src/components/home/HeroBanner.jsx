@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useSettings } from "../../context/SettingsContext";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -27,22 +26,15 @@ const slides = [
     alt: "All Natural Honey",
     eager: false,
   },
-  {
-    href: "/collections/oil-ghee",
-    img: "https://backoffice.ghorerbazar.com/banner/26q3s1771837303.jpeg",
-    alt: "Oil and Ghee",
-    eager: false,
-  },
 ];
 
 export default function HeroBanner() {
   const swiperRef = useRef(null);
-  const { hero_spotlight_url, hero_spotlight_link } = useSettings();
 
   return (
-    <section className="flex gap-3 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 h-[300px] sm:h-[380px] lg:h-[440px] max-w-7xl mx-auto w-full">
-      {/* Left — Swiper (70%) */}
-      <div className="relative w-full lg:w-[70%] h-full rounded-2xl overflow-hidden">
+    <section className="px-4 sm:px-6 lg:px-8 py-8 sm:py-12 h-[300px] sm:h-[380px] lg:h-[440px] max-w-7xl mx-auto w-full">
+      {/* Full Width Swiper */}
+      <div className="relative w-full h-full rounded-2xl overflow-hidden">
         <Swiper
           modules={[Autoplay, Pagination]}
           loop
@@ -84,19 +76,6 @@ export default function HeroBanner() {
           <ChevronRightIcon className="w-4 h-4 stroke-[2.5]" />
         </button>
       </div>
-
-      {/* Right — Product spotlight (30%), hidden on mobile */}
-      <Link
-        to={hero_spotlight_link}
-        className="hidden lg:block w-[30%] h-full rounded-2xl overflow-hidden group"
-      >
-        <img
-          src={hero_spotlight_url}
-          alt="Product spotlight"
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </Link>
 
       <style>{`
         .hero-swiper .swiper-pagination-bullet {

@@ -28,32 +28,6 @@ const DEFAULT_HERO = [
     link: '/collections/honey',
     cta: 'Shop Honey',
   },
-  {
-    id: 4,
-    label: 'Slide 4',
-    url: 'https://backoffice.ghorerbazar.com/banner/26q3s1771837303.jpeg',
-    link: '/collections/oil-ghee',
-    cta: 'Oil & Ghee',
-  },
-];
-
-const DEFAULT_PROMO = [
-  {
-    id: 1,
-    label: 'Promo Left',
-    url: 'https://backoffice.ghorerbazar.com/banner/Tyz131763632384.png',
-    link: '/collections/dates',
-    heading: 'Premium Dates Collection',
-    sub: 'Sourced from Medina & Ajwa farms',
-  },
-  {
-    id: 2,
-    label: 'Promo Right',
-    url: 'https://backoffice.ghorerbazar.com/banner/Wzx451763631917.png',
-    link: '/collections/honey',
-    heading: 'Pure Honey Varieties',
-    sub: 'Mustard, Sundarban & Litchi',
-  },
 ];
 
 function parseLinkType(link) {
@@ -313,7 +287,6 @@ function SpotlightSection({ categories, brands }) {
 
 export default function AdminBanners() {
   const [heroSlides, setHeroSlides]   = useState(DEFAULT_HERO);
-  const [promoSlides, setPromoSlides] = useState(DEFAULT_PROMO);
   const [savedIds, setSavedIds]       = useState({});
   const [categories, setCategories]   = useState([]);
   const [brands, setBrands]           = useState([]);
@@ -329,33 +302,21 @@ export default function AdminBanners() {
   };
 
   const updateHero  = (u) => setHeroSlides(prev => prev.map(s => s.id === u.id ? u : s));
-  const updatePromo = (u) => setPromoSlides(prev => prev.map(s => s.id === u.id ? u : s));
 
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold text-gray-900">Banners</h1>
 
       <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-gray-700">Hero Slides</h2>
-        <div className="grid gap-4 lg:grid-cols-2">
+        <h2 className="text-sm font-semibold text-gray-700">Hero Slides (3 Slides)</h2>
+        <p className="text-xs text-gray-500">Full width slider images for homepage</p>
+        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {heroSlides.map(s => (
             <BannerCard key={s.id} banner={s} onChange={updateHero} onSave={markSaved}
               saved={savedIds[s.id]} categories={categories} brands={brands} />
           ))}
         </div>
       </section>
-
-      <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-gray-700">Promo Banners</h2>
-        <div className="grid gap-4 lg:grid-cols-2">
-          {promoSlides.map(s => (
-            <BannerCard key={s.id} banner={s} onChange={updatePromo} onSave={markSaved}
-              saved={savedIds[s.id]} categories={categories} brands={brands} />
-          ))}
-        </div>
-      </section>
-
-      <SpotlightSection categories={categories} brands={brands} />
     </div>
   );
 }
