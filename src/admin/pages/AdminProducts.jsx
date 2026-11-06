@@ -11,6 +11,8 @@ import {
 import { getDisplayFlag, getProductFlags, getProductImages } from '../../utils/productHelpers';
 import { fmt } from '../../utils/fmt';
 import { toast } from 'sonner';
+import ImageUpload from '../../components/ui/ImageUpload';
+import MultipleImageUpload from '../../components/ui/MultipleImageUpload';
 
 const FLAG_OPTIONS = ['New Arrival', 'Offered Items', 'Best Selling'];
 const FILTER_FLAGS = ['All', ...FLAG_OPTIONS];
@@ -104,10 +106,13 @@ function CategoryModal({ category, onClose, onSaved }) {
               placeholder="auto-generated from name"
               className={`${inputCls} font-mono text-xs`} />
           </Field>
-          <Field label="Image URL">
-            <input value={form.image_url} onChange={e => set('image_url', e.target.value)}
-              placeholder="https://..." className={inputCls} />
-          </Field>
+          <ImageUpload
+            value={form.image_url}
+            onChange={url => set('image_url', url)}
+            folder="categories"
+            label="Category Image"
+            showUrlInput={true}
+          />
         </div>
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-100">
           <button onClick={onClose} className="rounded-full border border-gray-200 px-5 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50">Cancel</button>
@@ -171,10 +176,13 @@ function BrandModal({ brand, onClose, onSaved }) {
               placeholder="auto-generated from name"
               className={`${inputCls} font-mono text-xs`} />
           </Field>
-          <Field label="Logo / Image URL">
-            <input value={form.image_url} onChange={e => set('image_url', e.target.value)}
-              placeholder="https://..." className={inputCls} />
-          </Field>
+          <ImageUpload
+            value={form.image_url}
+            onChange={url => set('image_url', url)}
+            folder="brands"
+            label="Brand Logo / Image"
+            showUrlInput={true}
+          />
           <Field label="Description">
             <textarea rows={4} value={form.description} onChange={e => set('description', e.target.value)}
               placeholder="Brief description of the brand (optional)"
@@ -510,17 +518,14 @@ function ProductModal({ product, categories, brands, onClose, onSaved }) {
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          {previewImages.length > 0 && (
-            <div className="flex gap-3 flex-wrap">
-              {previewImages.map((url, i) => (
-                <img key={i} src={url} alt="" className="h-16 w-16 rounded-xl object-cover border border-gray-100" />
-              ))}
-            </div>
-          )}
-
-          <Field label="Images" required>
-            <ImageFields images={form.product_images} onChange={v => set('product_images', v)} />
-          </Field>
+          <MultipleImageUpload
+            images={form.product_images}
+            onChange={v => set('product_images', v)}
+            folder="products"
+            label="Product Images"
+            required={true}
+            maxImages={5}
+          />
 
           <Field label="Product Name" required>
             <input value={form.product_name}

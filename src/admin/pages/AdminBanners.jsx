@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { fetchCategories, fetchBrands } from '../../lib/products';
 import { fetchSettings, saveSettings } from '../../lib/settings';
+import ImageUpload from '../../components/ui/ImageUpload';
 
 const FLAG_OPTIONS = ['Best Selling', 'New Arrival', 'Offered Items'];
 
@@ -168,12 +169,14 @@ function BannerCard({ banner, onChange, onSave, saved, categories, brands }) {
       </div>
 
       <div className="p-4 space-y-3">
-        <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Image URL</label>
-          <input value={form.url} onChange={e => set('url', e.target.value)}
-            placeholder="https://..."
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange" />
-        </div>
+        <ImageUpload
+          value={form.url}
+          onChange={url => set('url', url)}
+          folder="banners"
+          label="Banner Image"
+          required={true}
+          showUrlInput={true}
+        />
 
         <div>
           <label className="block text-xs font-medium text-gray-700 mb-1">Link</label>
@@ -274,15 +277,14 @@ function SpotlightSection({ categories, brands }) {
         </div>
 
         <div className="p-4 space-y-3">
-          <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Image URL</label>
-            <input
-              value={form.hero_spotlight_url}
-              onChange={e => setForm(f => ({ ...f, hero_spotlight_url: e.target.value }))}
-              placeholder="https://..."
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange"
-            />
-          </div>
+          <ImageUpload
+            value={form.hero_spotlight_url}
+            onChange={url => setForm(f => ({ ...f, hero_spotlight_url: url }))}
+            folder="banners"
+            label="Spotlight Image"
+            required={true}
+            showUrlInput={true}
+          />
 
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">Link</label>
