@@ -175,7 +175,6 @@ function BannerCard({ banner, onChange, onSave, saved, categories, brands }) {
           folder="banners"
           label="Banner Image"
           required={true}
-          showUrlInput={true}
         />
 
         <div>
@@ -283,7 +282,6 @@ function SpotlightSection({ categories, brands }) {
             folder="banners"
             label="Spotlight Image"
             required={true}
-            showUrlInput={true}
           />
 
           <div>

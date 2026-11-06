@@ -4,8 +4,7 @@ import { uploadImage, deleteImage } from '../../lib/storage';
 import { toast } from 'sonner';
 
 /**
- * Multiple Image Upload Component
- * Supports uploading multiple files and managing URLs
+ * Multiple Image Upload Component - File Upload Only
  */
 export default function MultipleImageUpload({
   images = [''],
@@ -36,12 +35,6 @@ export default function MultipleImageUpload({
       setUploading(false);
       setUploadingIndex(null);
     }
-  };
-
-  const handleUrlChange = (index, value) => {
-    const newImages = [...images];
-    newImages[index] = value;
-    onChange(newImages);
   };
 
   const handleRemove = async (index) => {
@@ -83,7 +76,6 @@ export default function MultipleImageUpload({
       <div className="space-y-3">
         {images.map((url, index) => (
           <div key={index} className="relative group">
-            {/* Preview or Upload Box */}
             {url ? (
               <div className="relative">
                 <div className="flex gap-3 items-start p-3 border-2 border-gray-200 rounded-lg bg-white">
@@ -94,9 +86,9 @@ export default function MultipleImageUpload({
                     className="h-20 w-20 object-cover rounded-lg border border-gray-100 flex-shrink-0"
                   />
 
-                  {/* URL Display */}
+                  {/* Image Info */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-2">
                       <span className="text-xs font-medium text-gray-700">
                         Image {index + 1}
                         {index === 0 && (
@@ -105,17 +97,9 @@ export default function MultipleImageUpload({
                           </span>
                         )}
                       </span>
-                      {url.includes('supabase.co') && (
-                        <span className="text-xs text-green-600">☁️ Uploaded</span>
-                      )}
+                      <span className="text-xs text-green-600">☁️ Uploaded</span>
                     </div>
-                    <input
-                      type="url"
-                      value={url}
-                      onChange={(e) => handleUrlChange(index, e.target.value)}
-                      placeholder="https://example.com/image.jpg"
-                      className="w-full rounded-md border border-gray-200 px-2 py-1.5 text-xs focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange"
-                    />
+                    <p className="text-xs text-gray-400 truncate">{url}</p>
                     
                     {/* Replace Upload Button */}
                     <label
@@ -123,7 +107,7 @@ export default function MultipleImageUpload({
                       className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-brand-orange hover:bg-orange-50 rounded-md cursor-pointer transition-colors"
                     >
                       <ArrowUpTrayIcon className="h-3.5 w-3.5" />
-                      {url ? 'Replace' : 'Upload'}
+                      Replace Image
                       <input
                         id={`file-${index}`}
                         type="file"
@@ -168,6 +152,7 @@ export default function MultipleImageUpload({
                     <ArrowUpTrayIcon className="h-6 w-6 text-gray-400 mb-1.5" />
                     <p className="text-xs text-gray-500 font-medium">
                       Upload Image {index + 1}
+                      {index === 0 && <span className="text-brand-orange"> *</span>}
                     </p>
                     <p className="text-[11px] text-gray-400 mt-0.5">
                       PNG, JPG, WEBP (max 5MB)
@@ -182,17 +167,6 @@ export default function MultipleImageUpload({
                     disabled={uploading}
                   />
                 </label>
-
-                {/* Or URL Input */}
-                <div className="mt-2">
-                  <input
-                    type="url"
-                    value={url}
-                    onChange={(e) => handleUrlChange(index, e.target.value)}
-                    placeholder="Or paste image URL"
-                    className="w-full rounded-md border border-gray-200 px-3 py-1.5 text-xs focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange"
-                  />
-                </div>
 
                 {/* Remove Button for empty slots (except first) */}
                 {index > 0 && (
@@ -225,7 +199,9 @@ export default function MultipleImageUpload({
 
       {/* Help Text */}
       <p className="mt-2 text-xs text-gray-400">
-        {index === 0 ? 'First image will be the main product image' : 'Upload files or paste image URLs'}
+        {images.filter(Boolean).length === 0 
+          ? 'First image will be the main product image'
+          : 'Upload images from your computer'}
       </p>
     </div>
   );

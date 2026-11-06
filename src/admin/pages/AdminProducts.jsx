@@ -111,7 +111,6 @@ function CategoryModal({ category, onClose, onSaved }) {
             onChange={url => set('image_url', url)}
             folder="categories"
             label="Category Image"
-            showUrlInput={true}
           />
         </div>
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-100">
@@ -181,7 +180,6 @@ function BrandModal({ brand, onClose, onSaved }) {
             onChange={url => set('image_url', url)}
             folder="brands"
             label="Brand Logo / Image"
-            showUrlInput={true}
           />
           <Field label="Description">
             <textarea rows={4} value={form.description} onChange={e => set('description', e.target.value)}
