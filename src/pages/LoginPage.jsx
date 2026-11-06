@@ -12,7 +12,7 @@ export default function LoginPage() {
   const redirectTo = searchParams.get('redirect') ?? '/profile';
   const { user, login, sendOtp, verifyOtp } = useUserAuth();
 
-  useEffect(() => { document.title = 'Sign In | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'Sign In | খাটি বিশ্বাস'; }, []);
 
   // Password tab
   const [pwForm, setPwForm] = useState({ phoneOrEmail: '', password: '' });

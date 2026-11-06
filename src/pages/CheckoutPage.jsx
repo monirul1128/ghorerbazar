@@ -109,7 +109,7 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
-  useEffect(() => { document.title = 'Checkout | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'Checkout | খাটি বিশ্বাস'; }, []);
 
   // Re-fill once user auth resolves (e.g. slow session load)
   useEffect(() => {

@@ -14,7 +14,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => { document.title = 'Ghorer Bazar — Fresh from Farm to Your Door'; }, []);
+  useEffect(() => { document.title = 'খাটি বিশ্বাস'; }, []);
 
   useEffect(() => {
     Promise.all([

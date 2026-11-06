@@ -10,7 +10,7 @@ const values = [
 ];
 
 export default function AboutPage() {
-  useEffect(() => { document.title = 'About Us | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'About Us | খাটি বিশ্বাস'; }, []);
   return (
     <Layout>
       {/* Hero */}

@@ -87,7 +87,7 @@ export default function ProductPage() {
       setProduct(p);
       setPageLoading(false);
       if (p) {
-        document.title = `${p.product_name} | Ghorer Bazar`;
+        document.title = `${p.product_name} | খাটি বিশ্বাস`;
         fetchRelatedProducts(p.item_category, slug).then(setRelatedProducts);
       }
     });

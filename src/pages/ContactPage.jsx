@@ -7,7 +7,7 @@ import { useSettings } from '../context/SettingsContext';
 const EMPTY_FORM = { name: '', email: '', phone: '', message: '' };
 
 export default function ContactPage() {
-  useEffect(() => { document.title = 'Contact Us | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'Contact Us | খাটি বিশ্বাস'; }, []);
   const { phone, email, address, whatsapp } = useSettings();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});

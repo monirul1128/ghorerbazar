@@ -9,7 +9,7 @@ import { isBdPhone } from '../utils/validation';
 
 export default function RegisterPage() {
   const { user, register } = useUserAuth();
-  useEffect(() => { document.title = 'Create Account | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'Create Account | খাটি বিশ্বাস'; }, []);
   const [form, setForm] = useState({ name: '', phone: '', email: '', password: '', confirm: '' });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);

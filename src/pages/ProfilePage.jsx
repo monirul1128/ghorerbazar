@@ -268,7 +268,7 @@ export default function ProfilePage() {
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [ordersError, setOrdersError] = useState(false);
 
-  useEffect(() => { document.title = 'My Account | Ghorer Bazar'; }, []);
+  useEffect(() => { document.title = 'My Account | খাটি বিশ্বাস'; }, []);
 
   // Sync form from context whenever user updates (e.g. after save) — skip while editing
   useEffect(() => {

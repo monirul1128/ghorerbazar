@@ -103,7 +103,7 @@ export default function CatalogPage() {
   const [searchQuery] = useState(initialQ);
 
   useEffect(() => {
-    document.title = `${pageTitle} | Ghorer Bazar`;
+    document.title = `${pageTitle} | খাটি বিশ্বাস`;
   }, [pageTitle]);
 
   useEffect(() => {
