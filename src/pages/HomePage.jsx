@@ -5,8 +5,6 @@ import HeroBanner from '../components/home/HeroBanner';
 import IncentivesBar from '../components/home/IncentivesBar';
 import CategoryStrip from '../components/home/CategoryStrip';
 import PromoGrid from '../components/home/PromoGrid';
-import FeaturedTabs from '../components/home/FeaturedTabs';
-import BrandsRow from '../components/home/BrandsRow';
 import Testimonials from '../components/home/Testimonials';
 import ProductGrid from '../components/product/ProductGrid';
 import { fetchAllProducts } from '../lib/products';
@@ -55,8 +53,6 @@ export default function HomePage() {
       </section>
 
       <PromoGrid />
-      <FeaturedTabs />
-      <BrandsRow />
 
       {/* New Arrivals */}
       {newArrivals.length > 0 && (
